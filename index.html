@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Appointment Booking</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+    <h1>Appointment Booking</h1>
+    <div id="slots">
+
+    </div>
+
+    <div id="modal">
+        <div class="modal-content">
+            <h3>Book Appointment</h3>
+            <form id="bookingForm" onsubmit="handleFormSubmit(event)">
+                <input type="hidden" id="slotIndex">
+                <label for="name">Full Name:</label>
+                <input type="text" id="name" name="name" placeholder="Enter your name" required>
+                <label for="email">Email Address:</label>
+                <input type="email" id="email" name="email" placeholder="Enter your email" required>
+                <button type="submit">Confirm Booking</button>
+            </form>
+            <button class="close-button" onclick="closeModal()">Close</button>
+        </div>
+    </div>
+
+    <h2>Booked Appointments</h2>
+    <div id="appointments">
+        <p>No appointments booked yet.</p>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+
+</html>
