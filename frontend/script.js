@@ -3,8 +3,8 @@ const appointmentsContainer = document.getElementById('appointments');
 const modal = document.getElementById('modal');
 const slotIndexInput = document.getElementById('slotIndex');
 
-function fetchSlots() {
-  return axios.get('http://localhost:3000/slots')
+async function fetchSlots() {
+  return await axios.get('http://localhost:3000/slots')
     .then(response => response.data)
     .catch(err => {
       console.error('Error fetching slots:', err);
@@ -12,8 +12,8 @@ function fetchSlots() {
     });
 }
 
-function fetchAppointments() {
-  return axios.get('http://localhost:3000/appointments')
+async function fetchAppointments() {
+  return await axios.get('http://localhost:3000/appointments')
     .then(response => response.data)
     .catch(err => {
       console.error('Error fetching appointments:', err);
@@ -43,8 +43,8 @@ function updateSlots(slots) {
   });
 }
 
-function updateAppointments() {
-  fetchAppointments()
+async function updateAppointments() {
+  await fetchAppointments()
     .then(appointments => {
       appointmentsContainer.innerHTML = '';
 
@@ -77,8 +77,8 @@ function closeModal() {
   modal.style.display = 'none';
 }
 
-function updateSlotCount(slotId, newCount) {
-  return axios.put(`http://localhost:3000/slots/${slotId}`, { count: newCount })
+async function updateSlotCount(slotId, newCount) {
+  return await axios.put(`http://localhost:3000/slots/${slotId}`, { count: newCount })
     .then(response => {
       console.log('Slot count updated successfully:', response.data);
     })
@@ -87,14 +87,14 @@ function updateSlotCount(slotId, newCount) {
     });
 }
 
-function handleFormSubmit(event) {
+async function handleFormSubmit(event) {
   event.preventDefault();
   const name = document.getElementById('name').value;
   const email = document.getElementById('email').value;
   const slotId = parseInt(document.getElementById('slotIndex').value);
 
   fetchSlots()
-    .then(slots => {
+    .then(async slots => {
       const selectedSlot = slots.find((slot) => slot.id === slotId);
 
       if (!selectedSlot) {
@@ -102,7 +102,7 @@ function handleFormSubmit(event) {
         return;
       }
 
-      axios.post('http://localhost:3000/appointments', {
+      await axios.post('http://localhost:3000/appointments', {
         name,
         email,
         slotId,
@@ -125,8 +125,8 @@ function handleFormSubmit(event) {
     });
 }
 
-function deleteAppointment(appointmentId, slotId) {
-  axios.delete(`http://localhost:3000/appointments/${appointmentId}`)
+async function deleteAppointment(appointmentId, slotId) {
+  await axios.delete(`http://localhost:3000/appointments/${appointmentId}`)
     .then(() => {
       fetchSlots()
         .then(slots => {
